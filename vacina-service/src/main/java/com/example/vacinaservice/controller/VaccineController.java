@@ -37,7 +37,7 @@ public class VaccineController {
                 HttpStatus.CREATED);
     }
 
-    private  VaccineRegistry toEntity(RegistryDto registryDto, ImmunobiologicalDto immunobiologicalDto) {
+    private VaccineRegistry toEntity(RegistryDto registryDto, ImmunobiologicalDto immunobiologicalDto) {
         VaccineRegistry vaccineRegistry = new VaccineRegistry();
         vaccineRegistry.setVaccineCode(immunobiologicalDto.getCode());
         vaccineRegistry.setCpf(registryDto.getCpf());
