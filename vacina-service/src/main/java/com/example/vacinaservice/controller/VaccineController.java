@@ -2,10 +2,12 @@ package com.example.vacinaservice.controller;
 
 import com.example.vacinaservice.dto.ImmunobiologicalDto;
 import com.example.vacinaservice.dto.RegistryDto;
+import com.example.vacinaservice.dto.ResultDto;
 import com.example.vacinaservice.entity.VaccineRegistry;
 import com.example.vacinaservice.repository.VaccineRepository;
 import com.example.vacinaservice.request.ImmunobiologicalRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class VaccineController {
 
     @Autowired
+    private Environment environment;
+
+    @Autowired
     private VaccineRepository repository;
 
     @Autowired
@@ -27,14 +32,23 @@ public class VaccineController {
     public ResponseEntity post(
             @RequestBody RegistryDto registryDto){
 
-        ImmunobiologicalDto immunobiologicalDto =
+        var immunobiologicalDto =
                 immunobiologicalRequest.getByCode(registryDto.getVaccineCode());
 
-        VaccineRegistry vaccineRegistry =
-                toEntity(registryDto, immunobiologicalDto);
+        String port = environment.getProperty("local.server.port");
 
-        return new ResponseEntity(repository.save(vaccineRegistry),
-                HttpStatus.CREATED);
+
+        VaccineRegistry vaccineRegistry =
+                toEntity(registryDto, immunobiologicalDto.result);
+
+        repository.save(vaccineRegistry);
+
+        ResultDto<RegistryDto> vaccineResult = new ResultDto<>();
+        vaccineResult.result = registryDto;
+        vaccineResult.environment = "Vaccine: " + port +
+                " - Immunobiological: " + immunobiologicalDto.environment;
+
+        return new ResponseEntity(vaccineResult, HttpStatus.CREATED);
     }
 
     private VaccineRegistry toEntity(RegistryDto registryDto, ImmunobiologicalDto immunobiologicalDto) {
