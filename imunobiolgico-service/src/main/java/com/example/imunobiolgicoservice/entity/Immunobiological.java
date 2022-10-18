@@ -1,10 +1,14 @@
-package com.example.imunobiologicoservice.entity;
+package com.example.imunobiolgicoservice.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "immunobiological")
 public class Immunobiological {
 

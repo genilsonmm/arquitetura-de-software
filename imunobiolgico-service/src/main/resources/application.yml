@@ -11,8 +11,10 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  application:
+    name: immunobiological-service
 server:
-  port: 8080
+  port: 8000
 eureka:
   client:
     service-url:

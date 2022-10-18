@@ -1,13 +1,13 @@
-package com.example.imunobiologicoservice;
+package com.example.imunobiolgicoservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ImunobiologicoServiceApplication {
+public class ImunobiolgicoServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ImunobiologicoServiceApplication.class, args);
+        SpringApplication.run(ImunobiolgicoServiceApplication.class, args);
     }
 
 }
